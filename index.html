@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>News API</title>
     <link rel="stylesheet" href="index.css">
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
     <main class="main">
         <label class="label-main">Enter News :- </label>
-        <input id="input-News">
-        <button id="submit">search</button>
-        <button id="cancel">cancel</button>
+        <input id="input-News" placeholder="Type news topic...">
+        <button id="submit">
+            <i class="fa-solid fa-search"></i> Search
+        </button>
+        <button id="cancel">
+            <i class="fa-solid fa-xmark"></i> Cancel
+        </button>
     </main>
     <section class="section1"></section>
 
     <script src="index.js"></script>
 </body>
 </html>
-
-
-<!-- https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=3b3d28504f4244f792a8da45749e79ed -->

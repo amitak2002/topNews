@@ -27,7 +27,7 @@
     font-size: large;
 }
 #submit{
-    width: 8%;
+    width: 9%;
     height: 5vh;
     border: 1px solid black;
     border-radius:5px ;
@@ -38,7 +38,7 @@
 }
 
 #cancel{
-    width: 8%;
+    width: 9%;
     height: 5vh;
     border: 1px solid black;
     border-radius:5px ;
@@ -84,4 +84,34 @@
     cursor: pointer;
     transition: 0.5s;
     
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#cancel {
+    background-color: #dc3545;
+}
+
+#cancel:hover {
+    background-color: #a71d2a;
+}
+
+i {
+    font-size: 18px;
 }
