@@ -1,62 +1,77 @@
-
-const submit = document.querySelector('#submit')
+const submit = document.querySelector("#submit");
 
 submit.addEventListener("click", () => {
-    if (document.querySelector('.news')){
-        document.querySelector('.news').style.display = 'none';
+    if (document.querySelector(".news")) {
+        document.querySelector(".news").style.display = "none";
     }
-    const input = document.querySelector('#input-News').value
+    const input = document.querySelector("#input-News").value.trim();
 
     if (!input) {
-        alert("please Enter News for Serch")
+        alert("Please enter news for search");
         return;
     }
-    let section1 = document.querySelector('.section1');
+
+    let section1 = document.querySelector(".section1");
     section1.innerHTML = "";
 
     const fetchNews = async () => {
         try {
-            let response = await fetch(`https://newsdata.io/api/1/news?apikey=pub_41500c1fdd58e9e2c78b7491a43cd6cc09380&q=${input}`);
+            let response = await fetch(
+                `https://newsdata.io/api/1/news?apikey=pub_41500c1fdd58e9e2c78b7491a43cd6cc09380&q=${input}`
+            );
 
             if (!response.ok) throw new Error("API request failed");
 
             let data = await response.json();
-            console.log(data); // Debug: Check API response
+            console.log(data); // Debugging: Check API response
 
             if (!data.results || data.results.length === 0) {
                 section1.innerHTML = "<p>No news available.</p>";
                 return;
             }
 
-            data.results.forEach(article => {  
-
-                const newDiv = document.createElement('div');
-                
+            data.results.forEach((article) => {
+                const newDiv = document.createElement("div");
                 newDiv.classList.add("news");
 
-                const imgNew = document.createElement('img');
-                imgNew.setAttribute('src' , article.image_url);
-                imgNew.setAttribute('alt' , article.article_id);
-                imgNew.style.width = '100%';
-            
-                
-                const heading = document.createElement('h2');
-                heading.innerText = article.title || "No Title Available";
+                // Create image element
+                let imgNew = document.createElement("img");
+                if (article.image_url && article.image_url.length > 0) {
+                    imgNew.setAttribute("src", article.image_url);
+                    imgNew.setAttribute("alt", "News Image");
+                    imgNew.style.width = "100%";
+                    imgNew.style.height = "50%";
+                    newDiv.appendChild(imgNew);
+                }
 
-                const author = document.createElement('p');
-                author.innerText = `Author: ${article.description || "Unknown"}`;
-
-                newDiv.appendChild(imgNew);
+                // Create heading element
+                const heading = document.createElement("h2");
+                heading.innerText = article.title ? article.title.slice(0, 20) : "No Title Available";
                 newDiv.appendChild(heading);
+
+                // Create author/description element
+                const author = document.createElement("p");
+                author.innerText = `Author: ${article.description.slice(0,120).trim() || "Unknown"}`;
                 newDiv.appendChild(author);
+
+                // Append news to section
                 section1.appendChild(newDiv);
 
-                newDiv.addEventListener('click', () => {
-                    window.open(article.source_url, "_blank"); 
+                // Add event listener for opening article link
+                newDiv.addEventListener("click", () => {
+                    if (article.source_url) {
+                        window.open(article.source_url, "_blank");
+                    } else {
+                        alert("No source URL available.");
+                    }
                 });
             });
-            document.querySelector('.news').display = 'block';
 
+            // Ensure news is displayed
+            const firstNews = document.querySelector(".news");
+            if (firstNews) {
+                firstNews.style.display = "block";
+            }
         } catch (error) {
             console.error("Error fetching data:", error);
             section1.innerHTML = "<p>Error loading news. Please try again later.</p>";
@@ -64,4 +79,11 @@ submit.addEventListener("click", () => {
     };
 
     fetchNews();
+});
+
+const cancel = document.querySelector("#cancel");
+
+cancel.addEventListener("click", () => {
+    document.querySelector(".section1").innerHTML = "";
+    document.querySelector("#input-News").value = "";
 });
