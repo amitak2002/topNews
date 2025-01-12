@@ -33,6 +33,7 @@ submit.addEventListener("click", () => {
             data.results.forEach((article) => {
                 const newDiv = document.createElement("div");
                 newDiv.classList.add("news");
+                newDiv.style.borderRadius = '1em';
 
                 // Create image element
                 let imgNew = document.createElement("img");
@@ -46,16 +47,22 @@ submit.addEventListener("click", () => {
 
                 // Create heading element
                 const heading = document.createElement("h2");
+                
                 heading.innerText = article.title ? article.title.slice(0, 20) : "No Title Available";
+                heading.style.marginTop = '1em';
                 newDiv.appendChild(heading);
 
                 // Create author/description element
                 const author = document.createElement("p");
                 author.innerText = `Author: ${article.description.slice(0,120).trim() || "Unknown"}`;
+                author.style.marginTop = '1em'
                 newDiv.appendChild(author);
 
                 // Append news to section
-                section1.appendChild(newDiv);
+                if (article.image_url) {section1.appendChild(newDiv);} else {
+                    return;
+                }
+                
 
                 // Add event listener for opening article link
                 newDiv.addEventListener("click", () => {
